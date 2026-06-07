@@ -71,8 +71,9 @@
                         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" style="font-size: 20px;">search</span>
                         <input type="text" class="form-control rounded-pill ps-5 bg-light border-0" placeholder="Cari kompetisi..." style="width: 240px; padding-top: 8px; padding-bottom: 8px;">
                     </div>
-                    <button class="btn text-primary fw-semibold">Masuk</button>
-                    <button class="btn btn-primary-custom text-white px-4">Daftar</button>
+                    
+                    <a href="{{ route('login') }}" class="btn text-primary fw-semibold text-decoration-none">Masuk</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary-custom text-white px-4 text-decoration-none">Daftar</a>
                 </div>
             </div>
         </div>
