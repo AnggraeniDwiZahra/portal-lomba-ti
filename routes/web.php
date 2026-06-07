@@ -5,11 +5,19 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LombaController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DetailLombaController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PanduanController;
+use App\Http\Controllers\FaqController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/lomba', [LombaController::class, 'index'])->name('lomba.index');
 Route::get('/lomba/{slug}', [LombaController::class, 'show'])->name('lomba.show');
-
+Route::get('/detail-lomba', [DetailLombaController::class, 'index'])->name('lomba.detail');
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+Route::get('/kategori/{slug}', [KategoriController::class, 'detailKategori'])->name('kategori.detail');
+Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 Route::prefix('peserta')->name('peserta.')->group(function () {
     Route::get('/profil', [PesertaController::class, 'editProfil'])->name('profil.edit');

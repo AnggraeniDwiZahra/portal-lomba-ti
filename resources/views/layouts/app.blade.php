@@ -44,7 +44,7 @@
 
     <nav class="navbar navbar-expand-md navbar-light sticky-top navbar-custom py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="#" style="color: #0051d5 !important;">Portal Lomba TI</a>
+            <a class="navbar-brand fw-bold text-primary" href="/" style="color: #0051d5 !important;">Portal Lomba TI</a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -53,16 +53,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0 ms-md-4 gap-2">
                     <li class="nav-item">
-                        <a class="nav-link active fw-semibold text-primary" href="#">Lomba</a>
+                        <a class="nav-link {{ Request::is('lomba*') || Request::is('detail-lomba') ? 'active fw-semibold text-primary' : 'text-muted' }}" href="{{ route('lomba.index') }}">Lomba</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">Kategori</a>
+                        <a class="nav-link {{ Request::is('kategori*') ? 'active fw-semibold text-primary' : 'text-muted' }}" href="{{ route('kategori.index') }}">Kategori</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">Panduan</a>
+                        <a class="nav-link {{ Request::is('panduan*') ? 'active fw-semibold text-primary' : 'text-muted' }}" href="{{ route('panduan.index') }}">Panduan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">FAQ</a>
+                        <a class="nav-link {{ Request::is('faq*') ? 'active fw-semibold text-primary' : 'text-muted' }}" href="{{ route('faq.index') }}">FAQ</a>
                     </li>
                 </ul>
                 
@@ -92,8 +92,8 @@
                 <div class="col-6 col-lg-3">
                     <h6 class="fw-bold text-white mb-3">Navigasi</h6>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Tentang Kami</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Hubungi Kami</a></li>
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="{{ route('lomba.index') }}" class="text-white-50 text-decoration-none">Katalog Lomba</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-lg-3">
