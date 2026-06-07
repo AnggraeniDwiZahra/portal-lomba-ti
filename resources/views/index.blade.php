@@ -88,6 +88,19 @@
     .placeholder-img {
         background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
     }
+    .btn-primary-custom {
+        background-color: #0051d5;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .btn-primary-custom:hover {
+        background-color: #003ea8;
+        color: #fff;
+    }
 </style>
 @endpush
 
@@ -98,7 +111,7 @@
                 <div class="col-lg-6 text-center text-lg-start">
                     <div class="d-inline-flex align-items-center gap-2 badge-custom mb-4">
                         <span class="material-symbols-outlined" style="font-size: 18px;">verified</span>
-                        <span class="text-uppercase" style="font-size: 11px; tracking-spacing: 0.5px;">Pusat Kompetisi Mahasiswa</span>
+                        <span class="text-uppercase" style="font-size: 11px; letter-spacing: 0.5px;">Pusat Kompetisi Mahasiswa</span>
                     </div>
                     <h1 class="display-5 fw-bold lh-sm mb-3">
                         Tunjukkan Skill-mu di <br><span style="color: #0051d5;">Arena Kompetisi</span> Digital
@@ -108,10 +121,10 @@
                     </p>
                     
                     <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start align-items-center gap-4 pt-2">
-                        <button class="btn btn-primary-custom text-white d-flex align-items-center gap-2">
+                        <a href="{{ route('lomba.index') }}" class="btn btn-primary-custom d-flex align-items-center gap-2 text-decoration-none">
                             Eksplor Sekarang
                             <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
+                        </a>
                         
                         <div class="d-flex align-items-center gap-2">
                             <div class="avatar-group d-flex">
@@ -156,7 +169,7 @@
                 Cari Berdasarkan Kategori
             </h5>
             <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary-custom text-white px-4">Semua Lomba</button>
+                <a href="{{ route('lomba.index') }}" class="btn btn-primary-custom px-4 text-decoration-none">Semua Lomba</a>
                 <button class="btn btn-outline-category d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined fs-5">security</span> Siber
                 </button>
@@ -165,6 +178,9 @@
                 </button>
                 <button class="btn btn-outline-category d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined fs-5">language</span> Web Development
+                </button>
+                <button class="btn btn-outline-secondary rounded-pill px-4 py-2 text-muted d-flex align-items-center gap-2" style="font-size: 14px;">
+                    <span class="material-symbols-outlined fs-5">monitoring</span> Data Science
                 </button>
             </div>
         </div>
@@ -177,7 +193,7 @@
                     <small class="text-primary fw-bold text-uppercase">Aktif Sekarang</small>
                     <h2 class="fw-bold m-0 mt-1">Kompetisi Pilihan</h2>
                 </div>
-                <a href="#" class="text-decoration-none fw-semibold d-flex align-items-center gap-1">
+                <a href="{{ route('lomba.index') }}" class="text-decoration-none fw-semibold d-flex align-items-center gap-1">
                     Lihat Semua <span class="material-symbols-outlined">chevron_right</span>
                 </a>
             </div>
@@ -197,7 +213,9 @@
                                 <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Nasional</span>
                                 <small class="text-muted ms-2">• Cyber Security</small>
                             </div>
-                            <h5 class="card-title fw-bold text-dark lh-base mb-4" style="font-size: 16px;">Capture The Flag: HackQuest 2026 University Edition</h5>
+                            <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
+                                <a href="{{ route('lomba.detail', ['id' => 1]) }}" class="text-decoration-none text-dark hover-primary">Capture The Flag: HackQuest 2026 University Edition</a>
+                            </h5>
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
@@ -230,7 +248,9 @@
                                 <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Internasional</span>
                                 <small class="text-muted ms-2">• Data Science</small>
                             </div>
-                            <h5 class="card-title fw-bold text-dark lh-base mb-4" style="font-size: 16px;">DataViz Global Challenge: Predicting Cities</h5>
+                            <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
+                                <a href="{{ route('lomba.detail', ['id' => 2]) }}" class="text-decoration-none text-dark hover-primary">DataViz Global Challenge: Predicting Cities</a>
+                            </h5>
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
@@ -239,7 +259,7 @@
                                     <span class="fw-bold text-danger" style="font-size: 13px;">25 Sep 2026</span>
                                 </div>
                                 <hr class="text-muted opacity-25 my-2">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="col-flex d-flex justify-content-between align-items-center">
                                     <small class="text-muted" style="font-size: 12px;">Oleh <span class="fw-semibold text-dark">Google Devs</span></small>
                                     <button class="btn btn-outline-primary rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">bookmark</span>
@@ -264,7 +284,9 @@
                                 <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Regional</span>
                                 <small class="text-muted ms-2">• Comp. Programming</small>
                             </div>
-                            <h5 class="card-title fw-bold text-dark lh-base mb-4" style="font-size: 16px;">Algorithmic Sprint 2026: Problem Solving Marathon</h5>
+                            <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
+                                <a href="{{ route('lomba.detail', ['id' => 3]) }}" class="text-decoration-none text-dark hover-primary">Algorithmic Sprint 2026: Problem Solving Marathon</a>
+                            </h5>
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
@@ -283,6 +305,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="cta-banner p-4 p-md-5 mt-5 shadow">
                 <div class="container-fluid py-2">
@@ -292,7 +315,7 @@
                             <p class="text-white-50 mb-4 mb-lg-0">Bantu teman-teman mahasiswa lainnya menemukan peluang prestasi. Publikasikan info lombamu di sini secara gratis!</p>
                         </div>
                         <div class="col-lg-4 text-center text-lg-end">
-                            <button class="btn btn-light fw-semibold text-dark px-4 py-2.5" style="border-radius: 12px;">Posting Lomba Baru</button>
+                            <button class="btn btn-light fw-semibold text-dark px-4 py-2" style="border-radius: 12px;">Posting Lomba Baru</button>
                         </div>
                     </div>
                 </div>
