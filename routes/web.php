@@ -32,12 +32,12 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 */
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'authenticate'])->name('login.process'); // <--- Aksi submit login
+    Route::post('/login', [AuthController::class, 'authenticate'])->name('login.process');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'storeRegister'])->name('register.process');
 });
 
-// Aksi logout harus di dalam middleware auth agar aman
+// Aksi logout ditaruh di luar middleware guest, menggunakan POST agar aman dari CSRF
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 
@@ -66,17 +66,18 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     
     Route::prefix('admin')->name('admin.')->group(function () {
+        // Dashboard Overview
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         
-        // Manajemen Lomba
-        Route::get('/lomba', [AdminController::class, 'kelolaLomba'])->name('lomba.kelola');
-        Route::get('/lomba/create', [AdminController::class, 'tambahLomba'])->name('lomba.tambah');
-        Route::post('/lomba/store', [AdminController::class, 'simpanLomba'])->name('lomba.simpan');
+        // Manajemen Lomba (Diseragamkan rutenya agar rapi mengikuti struktur CRUD Laravel)
+        Route::get('/lomba', [AdminController::class, 'kelolaLomba'])->name('lomba'); // <-- Diubah dari lomba.kelola ke admin.lomba agar klop dengan Request::is('admin/lomba*')
+        Route::get('/lomba/create', [AdminController::class, 'tambahLomba'])->name('lomba.create');
+        Route::post('/lomba', [AdminController::class, 'simpanLomba'])->name('lomba.store');
         Route::get('/lomba/{id}/edit', [AdminController::class, 'editLomba'])->name('lomba.edit');
-        Route::put('/lomba/{id}/update', [AdminController::class, 'updateLomba'])->name('lomba.update');
-        Route::delete('/lomba/{id}/delete', [AdminController::class, 'hapusLomba'])->name('lomba.hapus');
+        Route::put('/lomba/{id}', [AdminController::class, 'updateLomba'])->name('lomba.update');
+        Route::delete('/lomba/{id}', [AdminController::class, 'hapusLomba'])->name('lomba.destroy');
 
-        // Menu Admin Lainnya
+        // Menu Admin Lainnya (Named routes ditambahkan . agar konsisten memanggil route('admin.kategori'))
         Route::get('/kategori', [AdminController::class, 'kategori'])->name('kategori');
         Route::get('/pengguna', [AdminController::class, 'pengguna'])->name('pengguna');
         Route::get('/pengaturan', [AdminController::class, 'pengaturan'])->name('pengaturan');
