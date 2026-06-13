@@ -213,9 +213,26 @@
                             <a href="#" class="btn btn-primary-custom text-white text-center py-3 fw-bold text-decoration-none" style="border-radius: 12px;">
                                 <span class="material-symbols-outlined me-1">rocket_launch</span> Daftar Kompetisi
                             </a>
-                            <a href="#" class="btn btn-outline-secondary text-center py-2.5 fw-semibold" style="border-radius: 12px;">
+                            <a href="#" class="btn btn-outline-secondary text-center py-2.5 fw-semibold mb-2" style="border-radius: 12px;">
                                 <span class="material-symbols-outlined me-1">download</span> Unduh Guidebook
                             </a>
+                            
+                            @auth
+                                <form action="{{ route('peserta.lomba.toggle', $id) }}" method="POST" class="m-0">
+                                    @csrf
+                                    @if(Auth::user()->savedCompetitions->contains($id))
+                                        <button type="submit" class="btn btn-danger w-100 text-center py-2.5 fw-semibold d-flex align-items-center justify-content-center gap-2" style="border-radius: 12px;">
+                                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark_remove</span> 
+                                            Hapus dari Simpanan
+                                        </button>
+                                    @else
+                                        <button type="submit" class="btn btn-outline-primary w-100 text-center py-2.5 fw-semibold d-flex align-items-center justify-content-center gap-2" style="border-radius: 12px;">
+                                            <span class="material-symbols-outlined">bookmark</span> 
+                                            Simpan Kompetisi
+                                        </button>
+                                    @endif
+                                </form>
+                            @endauth
                         </div>
                     </div>
 

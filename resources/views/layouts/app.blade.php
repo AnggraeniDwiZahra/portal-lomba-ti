@@ -6,8 +6,7 @@
     <title>@yield('title', 'Portal Lomba TI')</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
     <style>
@@ -36,6 +35,10 @@
         .btn-primary-custom:hover {
             background-color: #003ea8;
             box-shadow: 0 8px 20px rgba(0, 81, 213, 0.2);
+        }
+        /* Menghilangkan panah dropdown */
+        .hide-caret::after {
+            display: none !important;
         }
     </style>
     @stack('styles')
@@ -67,13 +70,60 @@
                 </ul>
                 
                 <div class="d-flex align-items-center gap-3">
-                    <div class="position-relative d-none d-lg-block">
+                    <form action="{{ route('lomba.index') }}" method="GET" class="position-relative d-none d-lg-block m-0">
                         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" style="font-size: 20px;">search</span>
-                        <input type="text" class="form-control rounded-pill ps-5 bg-light border-0" placeholder="Cari kompetisi..." style="width: 240px; padding-top: 8px; padding-bottom: 8px;">
-                    </div>
+                        <input type="text" 
+                               name="search" 
+                               value="{{ request('search') }}" 
+                               class="form-control rounded-pill ps-5 bg-light border-0" 
+                               placeholder="Cari kompetisi..." 
+                               style="min-width: 200px; padding-top: 8px; padding-bottom: 8px;">
+                    </form>
                     
-                    <a href="{{ route('login') }}" class="btn text-primary fw-semibold text-decoration-none">Masuk</a>
-                    <a href="{{ route('register') }}" class="btn btn-primary-custom text-white px-4 text-decoration-none">Daftar</a>
+                    @guest
+                        <a href="{{ route('login') }}" class="btn text-primary fw-semibold text-decoration-none">Masuk</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary-custom text-white px-4 text-decoration-none">Daftar</a>
+                    @endguest
+
+                    @auth
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 fw-semibold text-dark hide-caret" href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center overflow-hidden border border-secondary-subtle shadow-sm" style="width: 36px; height: 36px;">
+                                    @if(Auth::user()->profile_picture)
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Foto Profil" class="w-100 h-100 object-fit-cover">
+                                    @else
+                                        <span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">account_circle</span>
+                                    @endif
+                                </div>
+                                <span class="small d-none d-sm-inline">{{ Auth::user()->name }}</span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2" aria-labelledby="userMenu" style="border-radius: 12px; min-width: 200px;">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-3 small fw-medium" href="{{ route('dashboard') }}">
+                                        <span class="material-symbols-outlined text-muted fs-5">dashboard</span>
+                                        Dashboard Saya
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-3 small fw-medium" href="{{ route('peserta.profil.edit') }}">
+                                        <span class="material-symbols-outlined text-muted fs-5">person</span>
+                                        Edit Profil
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider opacity-50 my-2"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST" class="m-0" id="landing-logout-form">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-3 small text-danger fw-medium w-100 border-0 bg-transparent">
+                                            <span class="material-symbols-outlined fs-5">logout</span>
+                                            Keluar Sesi
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </div>

@@ -40,12 +40,24 @@
                 <p class="text-muted small m-0">Mulai langkahmu memenangkan kompetisi bergengsi.</p>
             </header>
 
-            <form action="#" onsubmit="event.preventDefault();">
+            @if ($errors->any())
+                <div class="alert alert-danger py-2 px-3 small rounded-3 mb-3">
+                    <ul class="mb-0 ps-3">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('register.process') }}" method="POST">
+                @csrf
+
                 <div class="mb-3">
                     <label class="form-label small fw-semibold text-dark" for="name">Nama Lengkap</label>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">person</span></span>
-                        <input type="text" class="form-control" id="name" placeholder="Nama lengkap Anda" required>
+                        <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" placeholder="Nama lengkap Anda" required>
                     </div>
                 </div>
 
@@ -53,7 +65,7 @@
                     <label class="form-label small fw-semibold text-dark" for="email">Alamat Email</label>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">mail</span></span>
-                        <input type="email" class="form-control" id="email" placeholder="nama@email.com" required>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="nama@email.com" required>
                     </div>
                 </div>
 
@@ -61,7 +73,15 @@
                     <label class="form-label small fw-semibold text-dark" for="password">Kata Sandi Baru</label>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">lock</span></span>
-                        <input type="password" class="form-control" id="password" placeholder="Minimal 8 karakter" required>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Minimal 8 karakter" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-dark" for="password_confirmation">Konfirmasi Kata Sandi</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><span class="material-symbols-outlined fs-5">lock_reset</span></span>
+                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Ulangi kata sandi baru" required>
                     </div>
                 </div>
 
@@ -84,5 +104,6 @@
             </footer>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
