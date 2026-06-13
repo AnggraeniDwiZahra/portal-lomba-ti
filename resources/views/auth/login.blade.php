@@ -79,12 +79,24 @@
                 <button class="col role-btn text-muted" id="btn-admin" onclick="switchRole('admin')">Administrator</button>
             </div>
 
-            <form action="#" onsubmit="event.preventDefault();">
+            @if ($errors->any())
+                <div class="alert alert-danger py-2 px-3 small rounded-3 mb-3">
+                    <ul class="mb-0 ps-3">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('login.process') }}" method="POST">
+                @csrf
+
                 <div class="mb-3">
                     <label class="form-label small fw-semibold text-dark" for="email">Alamat Email</label>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">mail</span></span>
-                        <input type="email" class="form-control" id="email" placeholder="nama@email.com" required>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="nama@email.com" value="{{ old('email') }}" required>
                     </div>
                 </div>
 
@@ -95,15 +107,15 @@
                     </div>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">lock</span></span>
-                        <input type="password" class="form-control border-end-0" id="password" placeholder="••••••••" required>
-                        <button class="btn btn-outline-secondary border-start-0 bg-white text-muted border-secondary-subtle" type="button" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px;">
-                            <span class="material-symbols-outlined fs-5 align-middle">visibility</span>
+                        <input type="password" name="password" class="form-control border-end-0" id="password" placeholder="••••••••" required>
+                        <button class="btn btn-outline-secondary border-start-0 bg-white text-muted border-secondary-subtle" type="button" id="togglePassword" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px;">
+                            <span class="material-symbols-outlined fs-5 align-middle" id="eyeIcon">visibility</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="remember">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
                     <label class="form-check-label text-muted small" for="remember">
                         Ingat saya di perangkat ini
                     </label>
@@ -161,6 +173,20 @@
                 btnUser.classList.add('text-muted');
             }
         }
+
+        // FUNGSI AKTIFKAN TOMBOL MATA (Show/Hide Password)
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerText = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerText = 'visibility';
+            }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
