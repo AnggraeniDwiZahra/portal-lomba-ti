@@ -25,6 +25,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * Relasi Many-to-Many ke Competition (Fitur Simpan Lomba)
+     */
+    public function savedCompetitions()
+    {
+        return $this->belongsToMany(Competition::class, 'competition_user', 'user_id', 'competition_id')
+            ->withTimestamps();
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -45,11 +54,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function savedCompetitions()
-    {
-        return $this->belongsToMany(Competition::class, 'competition_user', 'user_id', 'competition_id')
-            ->withTimestamps();
     }
 }

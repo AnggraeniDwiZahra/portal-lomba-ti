@@ -28,7 +28,7 @@
             <p class="text-muted small lh-relaxed mb-4">
                 Temukan berbagai kompetisi menarik di bidang {{ $category->name }}.
             </p>
-            <a href="{{ route('kategori.detail', ['slug' => Str::slug($category->name)]) }}" class="mt-auto text-decoration-none fw-semibold small d-flex align-items-center gap-1 text-primary">
+            <a href="{{ route('kategori.detail', ['id' => $category->id, 'slug' => Str::slug($category->name)]) }}" class="mt-auto text-decoration-none fw-semibold small d-flex align-items-center gap-1 text-primary">
                 Lihat Lomba <span class="material-symbols-outlined fs-6">arrow_right_alt</span>
             </a>
         </div>

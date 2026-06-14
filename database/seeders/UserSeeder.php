@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class UserSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@portal.com',
             'password' => \Hash::make('password'),
             'role' => 'admin',
+            'created_at' => Carbon::now()->subWeeks(1),
         ]);
 
         \App\Models\User::create([
@@ -24,6 +26,7 @@ class UserSeeder extends Seeder
             'email' => '2410817110002@mhs.ulm.ac.id',
             'password' => \Hash::make('password'),
             'role' => 'mahasiswa',
+            'created_at' => Carbon::now()->subWeeks(1),
         ]);
     }
 }
