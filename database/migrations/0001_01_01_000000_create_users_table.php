@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             
-            // Tambahan kolom untuk aplikasi kita
             $table->enum('role', ['admin', 'mahasiswa'])->default('mahasiswa');
             $table->string('profile_picture')->nullable();
             

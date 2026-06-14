@@ -11,25 +11,20 @@ use App\Http\Controllers\PanduanController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 
-/*
-|--------------------------------------------------------------------------
-| 1. GUEST ROUTES (Bisa diakses siapa saja tanpa login)
-|--------------------------------------------------------------------------
-*/
+//1. GUEST ROUTES (Bisa diakses siapa saja tanpa login)
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/lomba', [LombaController::class, 'index'])->name('lomba.index');
-Route::get('/lomba/{slug}', [LombaController::class, 'show'])->name('lomba.show');
-Route::get('/detail-lomba', [DetailLombaController::class, 'index'])->name('lomba.detail');
+
+// GANTI MENJADI SEPERTI INI (Arahkan langsung ke 'detail', bukan 'show')
+Route::get('/lomba/{id}', [LombaController::class, 'detail'])->name('lomba.detail');
+
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
-Route::get('/kategori/{slug}', [KategoriController::class, 'detailKategori'])->name('kategori.detail');
+Route::get('/kategori/lihat/{id}/{slug}', [KategoriController::class, 'detailKategori'])->name('kategori.detail');
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+// 2. AUTHENTICATION ROUTES (Proses Masuk, Daftar, & Keluar)
 
-/*
-|--------------------------------------------------------------------------
-| 2. AUTHENTICATION ROUTES (Proses Masuk, Daftar, & Keluar)
-|--------------------------------------------------------------------------
-*/
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.process');
@@ -41,11 +36,8 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 
-/*
-|--------------------------------------------------------------------------
-| 3. MAHASISWA / PESERTA ROUTES (Harus Login & Role: mahasiswa)
-|--------------------------------------------------------------------------
-*/
+// 3. MAHASISWA / PESERTA ROUTES (Harus Login & Role: mahasiswa)
+
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/dashboard', [PesertaController::class, 'index'])->name('dashboard');
 
@@ -57,29 +49,33 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     });
 });
 
+// 4. ADMINISTRATOR ROUTES (Harus Login & Role: admin)
 
-/*
-|--------------------------------------------------------------------------
-| 4. ADMINISTRATOR ROUTES (Harus Login & Role: admin)
-|--------------------------------------------------------------------------
-*/
 Route::middleware(['auth', 'role:admin'])->group(function () {
     
     Route::prefix('admin')->name('admin.')->group(function () {
         // Dashboard Overview
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         
-        // Manajemen Lomba (Diseragamkan rutenya agar rapi mengikuti struktur CRUD Laravel)
-        Route::get('/lomba', [AdminController::class, 'kelolaLomba'])->name('lomba'); // <-- Diubah dari lomba.kelola ke admin.lomba agar klop dengan Request::is('admin/lomba*')
+        // Manajemen Lomba
+        Route::get('/lomba', [AdminController::class, 'kelolaLomba'])->name('lomba');
         Route::get('/lomba/create', [AdminController::class, 'tambahLomba'])->name('lomba.create');
         Route::post('/lomba', [AdminController::class, 'simpanLomba'])->name('lomba.store');
         Route::get('/lomba/{id}/edit', [AdminController::class, 'editLomba'])->name('lomba.edit');
         Route::put('/lomba/{id}', [AdminController::class, 'updateLomba'])->name('lomba.update');
         Route::delete('/lomba/{id}', [AdminController::class, 'hapusLomba'])->name('lomba.destroy');
 
-        // Menu Admin Lainnya (Named routes ditambahkan . agar konsisten memanggil route('admin.kategori'))
+        // Manajemen Kategori 
         Route::get('/kategori', [AdminController::class, 'kategori'])->name('kategori');
+        Route::post('/kategori', [AdminController::class, 'simpanKategori'])->name('kategori.store'); 
+        Route::get('/kategori/{id}/edit', [AdminController::class, 'editKategori'])->name('kategori.edit'); 
+        Route::put('/kategori/{id}', [AdminController::class, 'updateKategori'])->name('kategori.update'); 
+        Route::delete('/kategori/{id}', [AdminController::class, 'hapusKategori'])->name('kategori.destroy'); 
+
+        // Menu Admin Lainnya
         Route::get('/pengguna', [AdminController::class, 'pengguna'])->name('pengguna');
         Route::get('/pengaturan', [AdminController::class, 'pengaturan'])->name('pengaturan');
+        Route::put('/pengaturan/password', [AdminController::class, 'updatePassword'])->name('pengaturan.update'); 
     });
 });
+

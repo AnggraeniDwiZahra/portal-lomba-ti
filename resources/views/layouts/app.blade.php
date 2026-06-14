@@ -136,24 +136,18 @@
     <footer class="text-white py-5 mt-5" style="background-color: #213145;">
         <div class="container">
             <div class="row g-4 mb-4">
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <h5 class="fw-bold text-white mb-3">Portal Lomba TI</h5>
                     <p class="text-white-50 w-75 small">Portal informasi lomba IT terintegrasi untuk mengasah skill digital mahasiswa.</p>
                 </div>
-                <div class="col-6 col-lg-3">
+                <div class="col-lg-4 text-lg-end">
                     <h6 class="fw-bold text-white mb-3">Navigasi</h6>
                     <ul class="list-unstyled small">
                         <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
                         <li class="mb-2"><a href="{{ route('lomba.index') }}" class="text-white-50 text-decoration-none">Katalog Lomba</a></li>
                     </ul>
                 </div>
-                <div class="col-6 col-lg-3">
-                    <h6 class="fw-bold text-white mb-3">Legalitas</h6>
-                    <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Kebijakan Privasi</a></li>
-                    </ul>
-                </div>
-            </div>
+           </div>
             <hr class="text-white opacity-25">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-2 small text-white-50">
                 <p class="m-0">© 2026 Portal Lomba TI</p>

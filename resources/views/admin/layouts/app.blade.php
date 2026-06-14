@@ -104,7 +104,7 @@
 
     <aside class="admin-sidebar">
         <div class="px-2 mb-4">
-            <a href="#" class="sidebar-brand text-primary">Portal Lomba TI</a>
+            <a href="{{ url('/') }}" class="sidebar-brand text-primary">Portal Lomba TI</a>
             <small class="d-block text-muted" style="font-size: 12px; margin-top: 4px;">Admin Portal</small>
         </div>
 
@@ -125,13 +125,6 @@
                 <span class="material-symbols-outlined">group</span>
                 <span>Pengguna</span>
             </a>
-
-            <div class="pt-3 mt-3 border-top border-secondary-subtle">
-                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2 py-2 fw-semibold" style="border-radius: 8px; background-color: #316bf3; border: none;">
-                    <span class="material-symbols-outlined fs-5">add</span>
-                    <span style="font-size: 14px;">Tambah Lomba Baru</span>
-                </button>
-            </div>
         </nav>
 
         <div class="mt-auto nav-custom">
@@ -139,7 +132,7 @@
                 <small class="text-muted d-block" style="font-size: 11px;">Operator Sesi:</small>
                 <span class="fw-bold text-dark small">{{ Auth::user()->name ?? 'Yudi Admin' }}</span>
             </div>
-            <a class="nav-link" href="#">
+            <a class="nav-link {{ Request::routeIs('admin.pengaturan') ? 'active' : '' }}" href="{{ route('admin.pengaturan') }}">
                 <span class="material-symbols-outlined">settings</span>
                 <span>Pengaturan</span>
             </a>
@@ -161,9 +154,9 @@
             </div>
             
             <div class="d-flex align-items-center gap-3">
-                <form action="#" method="GET" class="search-container d-none d-md-block">
+                <form action="{{ route('admin.lomba') }}" method="GET" class="search-container d-none d-md-block">
                     <span class="position-absolute top-50 start-0 translate-middle-y ms-3 material-symbols-outlined text-muted fs-5">search</span>
-                    <input type="text" name="search" class="search-input" value="{{ request('search') }}" placeholder="Cari nama kompetisi / data...">
+                    <input type="text" name="search" class="search-input" value="{{ request('search') }}" placeholder="Cari nama kompetisi...">
                 </form>
 
                 <div class="dropdown">

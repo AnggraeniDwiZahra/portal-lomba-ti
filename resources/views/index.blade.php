@@ -15,14 +15,6 @@
         border-radius: 50px;
         border: 1px solid rgba(49, 107, 243, 0.15);
     }
-    .avatar-group img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50px;
-        border: 2px solid #fff;
-        object-fit: cover;
-        margin-right: -12px;
-    }
     .glass-card {
         backdrop-filter: blur(8px);
         background: rgba(255, 255, 255, 0.8);
@@ -58,7 +50,6 @@
         height: 180px; 
         background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
     }
-
     .img-container img {
         width: 100%;
         height: 100%;
@@ -117,7 +108,7 @@
                         Tunjukkan Skill-mu di <br><span style="color: #0051d5;">Arena Kompetisi</span> Digital
                     </h1>
                     <p class="lead text-muted mb-4 fs-6">
-                        Temukan ratusan kompetisi IT bertaraf nasional dan internasional. Persiapkan dirimu untuk menjadi juara di bidang Siber, Web, Mobile, dan Competitive Programming.
+                        Temukan berbagai kompetisi IT bertaraf nasional dan internasional. Persiapkan dirimu untuk menjadi juara di bidang Siber, Web, Mobile, dan Competitive Programming.
                     </p>
                     
                     <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start align-items-center gap-4 pt-2">
@@ -125,17 +116,6 @@
                             Eksplor Sekarang
                             <span class="material-symbols-outlined">arrow_forward</span>
                         </a>
-                        
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="avatar-group d-flex">
-                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User 1">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="User 2">
-                            </div>
-                            <div class="ms-3 text-start">
-                                <h6 class="mb-0 fw-bold">1.2k+</h6>
-                                <small class="text-muted">Peserta Aktif</small>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -147,11 +127,11 @@
                                 <div class="glass-card p-3 d-flex justify-content-between align-items-center">
                                     <div>
                                         <small class="text-primary fw-bold text-uppercase" style="font-size: 11px;">Kompetisi Utama</small>
-                                        <h6 class="mb-0 fw-bold mt-1">Indonesian Cyber Summit 2026</h6>
+                                        <h6 class="mb-0 fw-bold mt-1">GEMASTIK 2026</h6>
                                     </div>
                                     <div class="text-end">
-                                        <small class="text-muted d-block" style="font-size: 11px;">Prize Pool</small>
-                                        <span class="fw-bold text-primary">Rp 50jt</span>
+                                        <small class="text-muted d-block" style="font-size: 11px;">Pusat Prestasi</small>
+                                        <span class="fw-bold text-primary">Nasional</span>
                                     </div>
                                 </div>
                             </div>
@@ -169,20 +149,22 @@
                 Cari Berdasarkan Kategori
             </h5>
             <div class="d-flex flex-wrap gap-2">
-                <a href="{{ route('lomba.index') }}" class="btn btn-primary-custom px-4 text-decoration-none">Semua Lomba</a>
-                <button class="btn btn-outline-category d-flex align-items-center gap-2">
-                    <span class="material-symbols-outlined fs-5">security</span> Siber
-                </button>
-                <button class="btn btn-outline-category d-flex align-items-center gap-2">
-                    <span class="material-symbols-outlined fs-5">terminal</span> Competitive Programming
-                </button>
-                <button class="btn btn-outline-category d-flex align-items-center gap-2">
-                    <span class="material-symbols-outlined fs-5">language</span> Web Development
-                </button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 py-2 text-muted d-flex align-items-center gap-2" style="font-size: 14px;">
-                    <span class="material-symbols-outlined fs-5">monitoring</span> Data Science
-                </button>
-            </div>
+    {{-- Tombol Semua Lomba --}}
+    <a href="{{ route('home') }}" class="btn {{ !request()->has('category') ? 'btn-primary-custom' : 'btn-outline-category' }} px-4 text-decoration-none">
+        Semua Lomba
+    </a>
+    
+    {{-- Loop Kategori --}}
+    @forelse($semuaKategori ?? [] as $kat)
+        <a href="{{ route('home', ['category' => $kat->id]) }}" 
+           class="btn {{ request('category') == $kat->id ? 'btn-primary-custom' : 'btn-outline-category' }} text-decoration-none">
+            {{ $kat->name }}
+        </a>
+    @empty
+        <button class="btn btn-outline-category">Siber</button>
+        <button class="btn btn-outline-category">Web Development</button>
+    @endforelse
+</div>
         </div>
     </section>
 
@@ -199,123 +181,70 @@
             </div>
 
             <div class="row g-4">
+                @forelse(($semuaLomba ?? collect())->take(3) as $lomba)
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 lomba-card overflow-hidden">
                         <div class="img-container">
-                            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80" alt="Cyber Security">
-                            <div class="card-badge text-success">
-                                <span class="spinner-grow spinner-grow-sm text-success" style="width: 6px; height: 6px; margin-right: 4px;"></span>
-                                <span>Opened</span>
+                            @if($lomba->poster)
+                                <img src="{{ asset('storage/' . $lomba->poster) }}" alt="{{ $lomba->title }}">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80" alt="Default Poster">
+                            @endif
+                            
+                            <div class="card-badge">
+                                @if(\Carbon\Carbon::parse($lomba->deadline)->isFuture())
+                                    <span class="spinner-grow spinner-grow-sm text-success" style="width: 6px; height: 6px; margin-right: 4px;"></span>
+                                    <span class="text-success">Opened</span>
+                                @else
+                                    <span class="text-danger">Closed</span>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body d-flex flex-column p-4">
                             <div class="mb-2">
-                                <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Nasional</span>
-                                <small class="text-muted ms-2">• Cyber Security</small>
+                                <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">
+                                    {{ $lomba->level->name ?? 'Umum' }}
+                                </span>
                             </div>
                             <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
-                                <a href="{{ route('lomba.detail', ['id' => 1]) }}" class="text-decoration-none text-dark hover-primary">Capture The Flag: HackQuest 2026 University Edition</a>
+                                <a href="{{ route('lomba.detail', $lomba->id) }}" class="text-decoration-none text-dark hover-primary">
+                                    {{ $lomba->title }}
+                                </a>
                             </h5>
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
                                         <span class="material-symbols-outlined fs-6">event</span> Deadline:
                                     </small>
-                                    <span class="fw-bold text-danger" style="font-size: 13px;">12 Okt 2026</span>
+                                    <span class="fw-bold text-danger" style="font-size: 13px;">
+                                        {{ \Carbon\Carbon::parse($lomba->deadline)->translatedFormat('d M Y') }}
+                                    </span>
                                 </div>
                                 <hr class="text-muted opacity-25 my-2">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted" style="font-size: 12px;">Oleh <span class="fw-semibold text-dark">ITB Cyber Group</span></small>
-                                    <button class="btn btn-outline-primary rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                        <span class="material-symbols-outlined" style="font-size: 18px;">bookmark</span>
-                                    </button>
+                                    <small class="text-muted" style="font-size: 12px;">Aksi: <span class="fw-semibold text-dark">Daftar Sekarang</span></small>
+                                    <a href="{{ $lomba->link_pendaftaran ?? '#' }}" target="_blank" class="btn btn-outline-primary rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Link Pendaftaran">
+                                        <span class="material-symbols-outlined" style="font-size: 18px;">link</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 lomba-card overflow-hidden">
-                        <div class="img-container">
-                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80" alt="Data Science">
-                            <div class="card-badge text-primary">
-                                <span class="fw-bold">Sisa 5 Hari</span>
-                            </div>
-                        </div>
-                        <div class="card-body d-flex flex-column p-4">
-                            <div class="mb-2">
-                                <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Internasional</span>
-                                <small class="text-muted ms-2">• Data Science</small>
-                            </div>
-                            <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
-                                <a href="{{ route('lomba.detail', ['id' => 2]) }}" class="text-decoration-none text-dark hover-primary">DataViz Global Challenge: Predicting Cities</a>
-                            </h5>
-                            <div class="mt-auto">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
-                                        <span class="material-symbols-outlined fs-6">event</span> Deadline:
-                                    </small>
-                                    <span class="fw-bold text-danger" style="font-size: 13px;">25 Sep 2026</span>
-                                </div>
-                                <hr class="text-muted opacity-25 my-2">
-                                <div class="col-flex d-flex justify-content-between align-items-center">
-                                    <small class="text-muted" style="font-size: 12px;">Oleh <span class="fw-semibold text-dark">Google Devs</span></small>
-                                    <button class="btn btn-outline-primary rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                        <span class="material-symbols-outlined" style="font-size: 18px;">bookmark</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                @empty
+                <div class="col-12 text-center py-5 text-muted">
+                    <span class="material-symbols-outlined fs-1 d-block mb-2 text-secondary">inventory_2</span>
+                    Belum ada kompetisi aktif saat ini.
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 lomba-card overflow-hidden">
-                        <div class="img-container">
-                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=500&q=80" alt="Competitive Programming">
-                            <div class="card-badge text-success">
-                                <span class="spinner-grow spinner-grow-sm text-success" style="width: 6px; height: 6px; margin-right: 4px;"></span>
-                                <span>Opened</span>
-                            </div>
-                        </div>
-                        <div class="card-body d-flex flex-column p-4">
-                            <div class="mb-2">
-                                <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">Regional</span>
-                                <small class="text-muted ms-2">• Comp. Programming</small>
-                            </div>
-                            <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
-                                <a href="{{ route('lomba.detail', ['id' => 3]) }}" class="text-decoration-none text-dark hover-primary">Algorithmic Sprint 2026: Problem Solving Marathon</a>
-                            </h5>
-                            <div class="mt-auto">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <small class="text-muted d-flex align-items-center gap-1" style="font-size: 12px;">
-                                        <span class="material-symbols-outlined fs-6">event</span> Deadline:
-                                    </small>
-                                    <span class="fw-bold text-danger" style="font-size: 13px;">30 Nov 2026</span>
-                                </div>
-                                <hr class="text-muted opacity-25 my-2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted" style="font-size: 12px;">Oleh <span class="fw-semibold text-dark">Compfest UI</span></small>
-                                    <button class="btn btn-outline-primary rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                        <span class="material-symbols-outlined" style="font-size: 18px;">bookmark</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
 
             <div class="cta-banner p-4 p-md-5 mt-5 shadow">
                 <div class="container-fluid py-2">
                     <div class="row align-items-center">
-                        <div class="col-lg-8 text-center text-lg-start">
-                            <h2 class="fw-bold mb-2 text-white">Punya Info Lomba Menarik?</h2>
-                            <p class="text-white-50 mb-4 mb-lg-0">Bantu teman-teman mahasiswa lainnya menemukan peluang prestasi. Publikasikan info lombamu di sini secara gratis!</p>
-                        </div>
-                        <div class="col-lg-4 text-center text-lg-end">
-                            <button class="btn btn-light fw-semibold text-dark px-4 py-2" style="border-radius: 12px;">Posting Lomba Baru</button>
+                        <div class="col-12 text-center">
+                            <h2 class="fw-bold mb-2 text-white">Raih Prestasimu Bersama Portal Lomba TI!</h2>
+                            <p class="text-white-50 m-0">Pantau terus halaman ini untuk mendapatkan pembaruan kompetisi IT terpopuler dan terpercaya setiap harinya.</p>
                         </div>
                     </div>
                 </div>

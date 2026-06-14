@@ -23,7 +23,7 @@ class CheckRole
 
         // 2. Cek apakah role user sesuai dengan yang diminta di web.php (admin atau mahasiswa)
         if (Auth::user()->role !== $role) {
-            // Jika tidak sesuai (misal mahasiswa maksa masuk ke /admin), lempar ke halaman yang sesuai
+            // Jika tidak sesuai, lempar ke halaman yang sesuai
             if (Auth::user()->role === 'admin') {
                 return redirect('/admin/dashboard');
             }

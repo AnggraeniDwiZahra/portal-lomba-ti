@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
@@ -57,6 +56,16 @@
             background-color: #ffffff;
             color: #0051d5;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* SAKTI: Menghilangkan icon mata bawaan browser (Edge/Chrome/Safari) */
+        input::-ms-reveal,
+        input::-ms-clear {
+            display: none !important;
+        }
+        input::-webkit-contacts-auto-fill-button,
+        input::-webkit-credentials-auto-fill-button {
+            display: none !important;
         }
     </style>
 </head>
@@ -125,28 +134,6 @@
                     Masuk Sekarang
                 </button>
             </form>
-
-            <div class="mt-4">
-                <div class="d-flex align-items-center mb-3">
-                    <hr class="flex-grow-1 text-muted opacity-25">
-                    <span class="mx-2 text-muted" style="font-size: 12px;">atau masuk dengan</span>
-                    <hr class="flex-grow-1 text-muted opacity-25">
-                </div>
-                <div class="row g-2">
-                    <div class="col-6">
-                        <button class="btn btn-light w-100 border border-secondary-subtle d-flex align-items-center justify-content-center gap-2 py-2" style="font-size: 13px; font-weight: 500; background-color: #ffffff;">
-                            <i class="bi bi-google text-danger" style="font-size: 16px;"></i>
-                            Google
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-light w-100 border border-secondary-subtle d-flex align-items-center justify-content-center gap-2 py-2" style="font-size: 13px; font-weight: 500; background-color: #ffffff;">
-                            <i class="bi bi-github text-dark" style="font-size: 16px;"></i>
-                            GitHub
-                        </button>
-                    </div>
-                </div>
-            </div>
 
             <footer class="mt-4 text-center">
                 <p class="text-muted small m-0">
