@@ -91,6 +91,47 @@ class AdminController extends Controller
 
     // 6. Proses Update Lomba
     public function updateLomba(Request $request, $id) {
+        // 1. Cari data lomba yang mau diedit berdasarkan ID
+        $lomba = Competition::findOrFail($id);
+
+        // 2. Validasi input form
+        $request->validate([
+            'title'             => 'required|string|max:255',
+            'description'       => 'required|string',
+            'category_id'       => 'required|exists:categories,id',
+            'level_id'          => 'required|exists:levels,id',
+            'registration_link' => 'required|url',
+            'deadline'          => 'required|date',
+            'poster'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
+        ]);
+
+        // 3. Tangani gambar poster
+        // Secara default, gunakan nama file gambar yang lama
+        $pathPoster = $lomba->poster; 
+
+        // Tapi JIKA admin mengupload gambar baru...
+        if ($request->hasFile('poster')) {
+            // (Opsional) Hapus gambar lama dari server agar tidak memenuhi penyimpanan
+            if ($lomba->poster && \Illuminate\Support\Facades\Storage::disk('public')->exists($lomba->poster)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($lomba->poster);
+            }
+            
+            // Simpan gambar yang baru
+            $pathPoster = $request->file('poster')->store('posters', 'public');
+        }
+
+        // 4. Update data ke database
+        $lomba->update([
+            'title'             => $request->title,
+            'description'       => $request->description,
+            'category_id'       => $request->category_id,
+            'level_id'          => $request->level_id,
+            'registration_link' => $request->registration_link,
+            'deadline'          => $request->deadline,
+            'poster'            => $pathPoster,
+        ]);
+
+        // 5. Kembalikan ke halaman daftar dengan pesan sukses
         return redirect()->route('admin.lomba')->with('success', 'Lomba berhasil diperbarui!');
     }
 
