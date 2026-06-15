@@ -38,25 +38,7 @@
             box-shadow: 0 0 0 4px rgba(0, 81, 213, 0.1);
             border-color: #0051d5;
         }
-        .role-switcher {
-            background-color: #eff4ff;
-            padding: 4px;
-            border-radius: 10px;
-        }
-        .role-btn {
-            border: none;
-            background: transparent;
-            padding: 8px 0;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-        .role-btn.active {
-            background-color: #ffffff;
-            color: #0051d5;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+        /* Role switcher CSS dihapus */
 
         input::-ms-reveal,
         input::-ms-clear {
@@ -82,16 +64,6 @@
                 <p class="text-muted small m-0">Silakan masuk ke akun Anda untuk melanjutkan.</p>
             </header>
 
-            <div class="row g-0 role-switcher mb-4" id="role-switcher">
-                <button class="col role-btn active" id="btn-user" onclick="switchRole('user')">Peserta</button>
-                <button class="col role-btn text-muted" id="btn-admin" onclick="switchRole('admin')">Administrator</button>
-            </div>
-
-            <div id="admin-note" class="text-center mb-3" style="display: none;">
-                <p class="text-muted small" style="font-size: 12px; line-height: 1.4;">
-                    Akses terbatas untuk pengelola sistem.<br>Hubungi Admin Utama untuk pendaftaran akun administratif.
-                </p>
-            </div>
 
             <?php if($errors->any()): ?>
                 <div class="alert alert-danger py-2 px-3 small rounded-3 mb-3">
@@ -149,43 +121,6 @@
     </main>
 
     <script>
-        function switchRole(role) {
-            const btnUser = document.getElementById('btn-user');
-            const btnAdmin = document.getElementById('btn-admin');
-            
-            if (role === 'user') {
-                btnUser.classList.add('active');
-                btnUser.classList.remove('text-muted');
-                btnAdmin.classList.remove('active');
-                btnAdmin.classList.add('text-muted');
-            } else {
-                btnAdmin.classList.add('active');
-                btnAdmin.classList.remove('text-muted');
-                btnUser.classList.remove('active');
-                btnUser.classList.add('text-muted');
-            }
-        }
-
-        function switchRole(role) {
-            const btnUser = document.getElementById('btn-user');
-            const btnAdmin = document.getElementById('btn-admin');
-            const adminNote = document.getElementById('admin-note'); // Tambah ini
-        
-            if (role === 'user') {
-                btnUser.classList.add('active');
-                btnUser.classList.remove('text-muted');
-                btnAdmin.classList.remove('active');
-                btnAdmin.classList.add('text-muted');
-                adminNote.style.display = 'none'; // Sembunyikan jika pilih peserta
-            } else {
-                btnAdmin.classList.add('active');
-                btnAdmin.classList.remove('text-muted');
-                btnUser.classList.remove('active');
-                btnUser.classList.add('text-muted');
-                adminNote.style.display = 'block'; // Munculkan jika pilih admin
-            }
-        }   
-
         document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const eyeIcon = document.getElementById('eyeIcon');
