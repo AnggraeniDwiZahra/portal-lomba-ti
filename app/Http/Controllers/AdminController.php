@@ -119,7 +119,8 @@ class AdminController extends Controller
     // 9. Tampil Halaman Pengguna
     public function pengguna() {
         $semuaPengguna = User::all(); // Mengambil semua data user (Admin, Mahasiswa, dll)
-        return view('admin.pengguna', compact('semuaPengguna'));
+        $terakhirDiperbarui = User::max('updated_at'); // Mengambil timestamp terakhir kali data user diperbarui
+        return view('admin.pengguna', compact('semuaPengguna', 'terakhirDiperbarui'));
     }
 
     // 10. Tampil Halaman Pengaturan
