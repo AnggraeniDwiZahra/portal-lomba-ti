@@ -14,7 +14,8 @@ class LombaController extends Controller
     {
         $categories = Category::all();
 
-        $listLomba = Competition::when($request->search, function ($query) use ($request) {
+        $listLomba = Competition::with('level')
+            ->when($request->search, function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%');
             })
             ->when($request->category_id, function ($query) use ($request) {

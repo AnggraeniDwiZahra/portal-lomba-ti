@@ -25,6 +25,22 @@
         height: 100%;
         object-fit: cover;
     }
+    .card-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+    }
     
     /* Tombol Kategori */
     .btn-category-active {
@@ -33,9 +49,9 @@
         border-color: #0051d5;
     }
     
-    /* Hover link judul tanpa !important */
-    .hover-primary-link:hover {
-        color: #0051d5;
+    /* Hover link judul */
+    .hover-primary:hover {
+        color: #0051d5 !important;
     }
 </style>
 @endpush
@@ -69,32 +85,7 @@
     <div class="row g-4">
         @forelse($listLomba as $lomba)
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 lomba-card overflow-hidden">
-                <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80" alt="{{ $lomba->title }}">
-                </div>
-                
-                <div class="card-body d-flex flex-column p-4">
-                    <div class="mb-2">
-                        <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">
-                            {{-- Ganti jadi relasi level --}}
-                            Level: {{ $lomba->level->name ?? 'Umum' }}
-                        </span>
-                    </div>
-                    
-                    <h5 class="card-title fw-bold lh-base mb-4" style="font-size: 16px;">
-                        <a href="{{ route('lomba.detail', $lomba->id) }}" class="text-decoration-none text-dark hover-primary-link">
-                            {{ $lomba->title }}
-                        </a>
-                    </h5>
-                    
-                    <div class="mt-auto">
-                        <small class="text-muted" style="font-size: 12px;">
-                            Deadline: {{ \Carbon\Carbon::parse($lomba->deadline)->format('d M Y') }}
-                        </small>
-                    </div>
-                </div>
-            </div>
+            <x-competition-card :lomba="$lomba" />
         </div>
         @empty
         <div class="col-12 text-center py-5">
