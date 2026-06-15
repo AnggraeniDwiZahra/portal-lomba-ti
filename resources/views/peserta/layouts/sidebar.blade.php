@@ -1,8 +1,8 @@
 <div class="sidebar-card p-4 text-center position-sticky" style="top: 100px;">
     <div class="position-relative d-inline-block mb-3">
         <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center border border-4 border-light shadow-sm overflow-hidden" style="width: 96px; height: 96px;">
-            @if(Auth::user()->profile_picture)
-                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Foto Profil" class="w-100 h-100 object-fit-cover">
+            @if(Auth::user()->profile_photo)
+                <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Foto Profil" class="w-100 h-100 object-fit-cover">
             @else
                 <span class="material-symbols-outlined text-primary" style="font-size: 56px; font-variation-settings: 'FILL' 1;">account_circle</span>
             @endif

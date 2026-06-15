@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             
             $table->enum('role', ['admin', 'mahasiswa'])->default('mahasiswa');
-            $table->string('profile_picture')->nullable();
+            $table->string('profile_photo')->nullable();
             
             $table->rememberToken();
             $table->timestamps();
