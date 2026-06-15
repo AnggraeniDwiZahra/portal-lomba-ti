@@ -31,15 +31,15 @@
 
         <div class="row g-4 mb-5 position-relative align-items-center">
             <div class="position-absolute start-0 start-md-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 44px; height: 44px; z-index: 2; left: 20px;">
-                <span class="material-symbols-outlined fs-5">menu_book</span>
+                <span class="material-symbols-outlined fs-5">description</span>
             </div>
             <div class="col-md-6 d-none d-md-block"></div>
             <div class="col-md-6 ps-5 ps-md-5">
                 <div class="card border border-secondary-subtle rounded-4 p-4 bg-white shadow-sm hover-line-left">
                     <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-1 rounded-pill" style="font-size: 11px;">Langkah 02</span>
-                    <h5 class="fw-bold text-dark">Pahami Guidebook (Buku Panduan)</h5>
+                    <h5 class="fw-bold text-dark">Pahami Deskripsi & Aturan Lomba</h5>
                     <p class="text-muted small m-0 lh-relaxed">
-                        Buka detail lomba, lalu klik tombol <b>Unduh Guidebook</b>. Pelajari aturan teknis, persyaratan berkas, komposisi tim, serta timeline penting yang ditentukan penyelenggara.
+                        Klik pada lomba yang kamu pilih untuk membuka halaman detailnya. Pelajari deskripsi kompetisi, persyaratan kriteria, batas waktu (*deadline*), serta tingkat wilayah yang ditentukan oleh penyelenggara.
                     </p>
                 </div>
             </div>

@@ -51,7 +51,7 @@
                         </div>
                         <div class="pt-3 border-top d-flex justify-content-between align-items-center">
                             <span class="badge bg-success-subtle text-success uppercase fw-bold px-2.5 py-1.5 rounded-pill" style="font-size: 10px;">Pendaftaran Buka</span>
-                            <a href="/detail-lomba?id={{ $lomba->id }}" class="text-primary text-decoration-none small fw-semibold d-flex align-items-center gap-1">
+                            <a href="{{ route('lomba.detail', $lomba->id) }}" class="text-primary text-decoration-none small fw-semibold d-flex align-items-center gap-1">
                                 Lihat Detail <span class="material-symbols-outlined fs-6">arrow_forward</span>
                             </a>
                         </div>
