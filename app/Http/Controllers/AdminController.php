@@ -7,6 +7,8 @@ use App\Models\Competition;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Level;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -199,5 +201,26 @@ class AdminController extends Controller
     // 10. Tampil Halaman Pengaturan
     public function pengaturan() {
         return view('admin.pengaturan');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // Validasi
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        // Cek apakah password lama benar
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+            return back()->withErrors(['current_password' => 'Password saat ini salah!']);
+        }
+
+        // Update password
+        $user = Auth::user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Password berhasil diperbarui!');
     }
 }

@@ -20,10 +20,14 @@
             
             <div class="bg-light p-3 rounded-3 mb-4 text-start">
                 <p class="mb-1 small fw-bold">Email Admin:</p>
-                <p class="mb-3 text-primary">2410817110002@mhs.ulm.ac.id</p>
+                <a href="mailto:2410817110002@mhs.ulm.ac.id" class="text-decoration-none d-block mb-3">
+                    2410817110002@mhs.ulm.ac.id
+                </a>
                 
                 <p class="mb-1 small fw-bold">WhatsApp Admin:</p>
-                <p class="mb-0 text-primary">+62 819-7443-922</p>
+                <a href="https://wa.me/628197443922" target="_blank" class="text-decoration-none d-block">
+                    +62 819-7443-922
+                </a>
             </div>
 
             <a href="{{ route('login') }}" class="btn btn-outline-primary w-100 rounded-pill">Kembali ke Login</a>
