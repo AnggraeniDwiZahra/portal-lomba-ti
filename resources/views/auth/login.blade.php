@@ -58,7 +58,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* SAKTI: Menghilangkan icon mata bawaan browser (Edge/Chrome/Safari) */
         input::-ms-reveal,
         input::-ms-clear {
             display: none !important;
@@ -86,6 +85,12 @@
             <div class="row g-0 role-switcher mb-4" id="role-switcher">
                 <button class="col role-btn active" id="btn-user" onclick="switchRole('user')">Peserta</button>
                 <button class="col role-btn text-muted" id="btn-admin" onclick="switchRole('admin')">Administrator</button>
+            </div>
+
+            <div id="admin-note" class="text-center mb-3" style="display: none;">
+                <p class="text-muted small" style="font-size: 12px; line-height: 1.4;">
+                    Akses terbatas untuk pengelola sistem.<br>Hubungi Admin Utama untuk pendaftaran akun administratif.
+                </p>
             </div>
 
             @if ($errors->any())
@@ -161,7 +166,26 @@
             }
         }
 
-        // FUNGSI AKTIFKAN TOMBOL MATA (Show/Hide Password)
+        function switchRole(role) {
+            const btnUser = document.getElementById('btn-user');
+            const btnAdmin = document.getElementById('btn-admin');
+            const adminNote = document.getElementById('admin-note'); // Tambah ini
+        
+            if (role === 'user') {
+                btnUser.classList.add('active');
+                btnUser.classList.remove('text-muted');
+                btnAdmin.classList.remove('active');
+                btnAdmin.classList.add('text-muted');
+                adminNote.style.display = 'none'; // Sembunyikan jika pilih peserta
+            } else {
+                btnAdmin.classList.add('active');
+                btnAdmin.classList.remove('text-muted');
+                btnUser.classList.remove('active');
+                btnUser.classList.add('text-muted');
+                adminNote.style.display = 'block'; // Munculkan jika pilih admin
+            }
+        }   
+
         document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const eyeIcon = document.getElementById('eyeIcon');
