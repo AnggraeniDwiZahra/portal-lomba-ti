@@ -78,10 +78,18 @@
             
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav ms-4 gap-3">
-                    <li class="nav-item"><a class="nav-link fw-semibold text-muted" href="{{ route('lomba.index') }}">Lomba</a></li>
-                    <li class="nav-item"><a class="nav-link fw-semibold text-muted" href="#">Kategori</a></li>
-                    <li class="nav-item"><a class="nav-link fw-semibold text-muted" href="#">Panduan</a></li>
-                    <li class="nav-item"><a class="nav-link fw-semibold text-muted" href="#">FAQ</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold {{ Request::is('lomba*') ? 'text-primary' : 'text-muted' }}" href="{{ route('lomba.index') }}">Lomba</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold {{ Request::is('kategori*') ? 'text-primary' : 'text-muted' }}" href="{{ route('kategori.index') }}">Kategori</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold {{ Request::is('panduan*') ? 'text-primary' : 'text-muted' }}" href="{{ route('panduan.index') }}">Panduan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold {{ Request::is('faq*') ? 'text-primary' : 'text-muted' }}" href="{{ route('faq.index') }}">FAQ</a>
+                    </li>
                 </ul>
                 
                 <div class="dropdown">
