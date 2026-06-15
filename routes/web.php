@@ -30,6 +30,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.process');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'storeRegister'])->name('register.process');
+
+    Route::get('/lupa-sandi', function () {
+        return view('auth.lupa-sandi');
+    })->name('password.request');
 });
 
 // Aksi logout ditaruh di luar middleware guest, menggunakan POST agar aman dari CSRF

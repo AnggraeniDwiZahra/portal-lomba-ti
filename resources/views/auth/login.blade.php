@@ -89,7 +89,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <label class="form-label small fw-semibold text-dark m-0" for="password">Kata Sandi</label>
-                        <a class="small text-decoration-none" href="#" style="color: #0051d5; font-size: 13px;">Lupa sandi?</a>
+                        <a class="small text-decoration-none" href="{{ route('password.request') }}" style="color: #0051d5; font-size: 13px;">Lupa sandi?</a>
                     </div>
                     <div class="input-group">
                         <span class="input-group-text"><span class="material-symbols-outlined fs-5">lock</span></span>
