@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
 {
-    protected $fillable = [
-        'title',
-        'description',
-        'poster',
-        'registration_link',
-        'deadline',
+    protected $fillable = [     
         'user_id',
-        'category_id',
-        'level_id',
+        'title', 
+        'description', 
+        'category_id', 
+        'level_id', 
+        'registration_link', 
+        'deadline', 
+        'poster'
     ];
 
     public function category()

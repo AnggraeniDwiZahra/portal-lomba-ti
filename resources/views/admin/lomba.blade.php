@@ -23,30 +23,35 @@
         </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-muted small">
-                <tr>
-                    <th class="border-0 px-3 py-3">Nama Lomba</th>
-                    <th class="border-0 py-3">Level</th>
-                    <th class="border-0 py-3">Deadline</th>
-                    <th class="border-0 py-3 text-center">Status Pendaftaran</th>
-                    <th class="border-0 py-3 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="small">
-                @forelse($semuaLomba as $lomba)
-                <tr>
-                    <td class="px-3 py-3 fw-semibold">
-                        {{ $lomba->title }}
-                        <span class="text-muted fw-normal d-block" style="font-size: 12px;">ID: COMP-{{ $lomba->id }}</span>
-                    </td>
-                    
-                    <td>
-                        <span class="badge bg-primary-subtle text-primary rounded-2 px-2 py-1">
-                            {{ $lomba->level->name ?? 'Umum' }}
-                        </span>
-                    </td>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-muted small">
+            <tr>
+                <th class="border-0 px-3 py-3" style="width: 80px;">Poster</th>
+                <th class="border-0 px-3 py-3">Nama Lomba</th>
+                <th class="border-0 py-3">Level</th>
+                <th class="border-0 py-3">Deadline</th>
+                <th class="border-0 py-3 text-center">Status Pendaftaran</th>
+                <th class="border-0 py-3 text-center">Aksi</th>
+            </tr>
+        </thead>
+    <tbody class="small">
+    @forelse($semuaLomba as $lomba)
+    <tr>
+        <td class="px-3 py-3 text-center">
+            @if($lomba->poster)
+                <img src="{{ asset('storage/' . $lomba->poster) }}" alt="{{ $lomba->title }}" class="rounded shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
+            @else
+                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted mx-auto" style="width: 50px; height: 50px;">
+                    <span class="material-symbols-outlined fs-5">image_not_supported</span>
+                </div>
+            @endif
+        </td>
+
+        <td class="px-3 py-3 fw-semibold">
+            {{ $lomba->title }}
+            <span class="text-muted fw-normal d-block" style="font-size: 12px;">ID: COMP-{{ $lomba->id }}</span>
+        </td>
                     
                     <td>
                         {{ \Carbon\Carbon::parse($lomba->deadline)->translatedFormat('d F Y') }}
@@ -78,7 +83,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted py-5">
+                    <td colspan="6" class="text-center text-muted py-5">
                         <span class="material-symbols-outlined fs-1 d-block mb-2 text-secondary">inventory_2</span>
                         Belum ada data kompetisi IT di database.
                     </td>

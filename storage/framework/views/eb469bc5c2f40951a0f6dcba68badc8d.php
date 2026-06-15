@@ -21,32 +21,36 @@
         </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-muted small">
-                <tr>
-                    <th class="border-0 px-3 py-3">Nama Lomba</th>
-                    <th class="border-0 py-3">Level</th>
-                    <th class="border-0 py-3">Deadline</th>
-                    <th class="border-0 py-3 text-center">Status Pendaftaran</th>
-                    <th class="border-0 py-3 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="small">
-                <?php $__empty_1 = true; $__currentLoopData = $semuaLomba; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lomba): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <tr>
-                    <td class="px-3 py-3 fw-semibold">
-                        <?php echo e($lomba->title); ?>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-muted small">
+            <tr>
+                <th class="border-0 px-3 py-3" style="width: 80px;">Poster</th>
+                <th class="border-0 px-3 py-3">Nama Lomba</th>
+                <th class="border-0 py-3">Level</th>
+                <th class="border-0 py-3">Deadline</th>
+                <th class="border-0 py-3 text-center">Status Pendaftaran</th>
+                <th class="border-0 py-3 text-center">Aksi</th>
+            </tr>
+        </thead>
+    <tbody class="small">
+    <?php $__empty_1 = true; $__currentLoopData = $semuaLomba; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lomba): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+    <tr>
+        <td class="px-3 py-3 text-center">
+            <?php if($lomba->poster): ?>
+                <img src="<?php echo e(asset('storage/' . $lomba->poster)); ?>" alt="<?php echo e($lomba->title); ?>" class="rounded shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
+            <?php else: ?>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted mx-auto" style="width: 50px; height: 50px;">
+                    <span class="material-symbols-outlined fs-5">image_not_supported</span>
+                </div>
+            <?php endif; ?>
+        </td>
 
-                        <span class="text-muted fw-normal d-block" style="font-size: 12px;">ID: COMP-<?php echo e($lomba->id); ?></span>
-                    </td>
-                    
-                    <td>
-                        <span class="badge bg-primary-subtle text-primary rounded-2 px-2 py-1">
-                            <?php echo e($lomba->level->name ?? 'Umum'); ?>
+        <td class="px-3 py-3 fw-semibold">
+            <?php echo e($lomba->title); ?>
 
-                        </span>
-                    </td>
+            <span class="text-muted fw-normal d-block" style="font-size: 12px;">ID: COMP-<?php echo e($lomba->id); ?></span>
+        </td>
                     
                     <td>
                         <?php echo e(\Carbon\Carbon::parse($lomba->deadline)->translatedFormat('d F Y')); ?>
@@ -79,7 +83,7 @@
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <tr>
-                    <td colspan="5" class="text-center text-muted py-5">
+                    <td colspan="6" class="text-center text-muted py-5">
                         <span class="material-symbols-outlined fs-1 d-block mb-2 text-secondary">inventory_2</span>
                         Belum ada data kompetisi IT di database.
                     </td>

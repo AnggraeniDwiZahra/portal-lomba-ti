@@ -35,9 +35,9 @@
                             <span class="text-muted" style="font-size: 11px;">UID: USER-{{ $user->id }}</span>
                         </div>
                         <div class="text-muted">
-    Terakhir diperbarui: 
-    {{ $terakhirDiperbarui ? \Carbon\Carbon::parse($terakhirDiperbarui)->diffForHumans() : 'Belum ada data' }}
-</div>
+                          Terakhir diperbarui: 
+                         {{ $terakhirDiperbarui ? \Carbon\Carbon::parse($terakhirDiperbarui)->diffForHumans() : 'Belum ada data' }}
+                    </div>
                     </td>
                     
                     <td>{{ $user->email }}</td>

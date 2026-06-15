@@ -44,7 +44,39 @@ class AdminController extends Controller
     }
 
     // 4. Proses Simpan Lomba
+   // 4. Proses Simpan Lomba
     public function simpanLomba(Request $request) {
+        // 1. Validasi semua data yang dikirim dari form blade
+        $request->validate([
+            'title'             => 'required|string|max:255',
+            'description'       => 'required|string',
+            'category_id'       => 'required|exists:categories,id',
+            'level_id'          => 'required|exists:levels,id',
+            'registration_link' => 'required|url',
+            'deadline'          => 'required|date',
+            'poster'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validasi gambar
+        ]);
+
+        // 2. Proses upload gambar poster jika admin memilih file
+        $pathPoster = null;
+        if ($request->hasFile('poster')) {
+            // Menyimpan file ke folder storage/app/public/posters
+            $pathPoster = $request->file('poster')->store('posters', 'public');
+        }
+
+        // 3. Masukkan semua data ke database
+      Competition::create([
+            'user_id'           => \Illuminate\Support\Facades\Auth::id(),
+            'title'             => $request->title,
+            'description'       => $request->description,
+            'category_id'       => $request->category_id,
+            'level_id'          => $request->level_id,
+            'registration_link' => $request->registration_link,
+            'deadline'          => $request->deadline,
+            'poster'            => $pathPoster, 
+        ]);
+
+        // 4. Redirect kembali dengan pesan sukses
         return redirect()->route('admin.lomba')->with('success', 'Lomba berhasil ditambahkan!');
     }
 
