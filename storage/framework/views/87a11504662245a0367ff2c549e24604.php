@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Portal Lomba TI') - Dashboard Peserta</title>
+    <title><?php echo $__env->yieldContent('title', 'Portal Lomba TI'); ?> - Dashboard Peserta</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@
             display: none !important;
         }
     </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
 
@@ -79,44 +79,44 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav ms-4 gap-3">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold {{ Request::is('lomba*') ? 'text-primary' : 'text-muted' }}" href="{{ route('lomba.index') }}">Lomba</a>
+                        <a class="nav-link fw-semibold <?php echo e(Request::is('lomba*') ? 'text-primary' : 'text-muted'); ?>" href="<?php echo e(route('lomba.index')); ?>">Lomba</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold {{ Request::is('kategori*') ? 'text-primary' : 'text-muted' }}" href="{{ route('kategori.index') }}">Kategori</a>
+                        <a class="nav-link fw-semibold <?php echo e(Request::is('kategori*') ? 'text-primary' : 'text-muted'); ?>" href="<?php echo e(route('kategori.index')); ?>">Kategori</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold {{ Request::is('panduan*') ? 'text-primary' : 'text-muted' }}" href="{{ route('panduan.index') }}">Panduan</a>
+                        <a class="nav-link fw-semibold <?php echo e(Request::is('panduan*') ? 'text-primary' : 'text-muted'); ?>" href="<?php echo e(route('panduan.index')); ?>">Panduan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold {{ Request::is('faq*') ? 'text-primary' : 'text-muted' }}" href="{{ route('faq.index') }}">FAQ</a>
+                        <a class="nav-link fw-semibold <?php echo e(Request::is('faq*') ? 'text-primary' : 'text-muted'); ?>" href="<?php echo e(route('faq.index')); ?>">FAQ</a>
                     </li>
                 </ul>
                 
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center gap-3 text-decoration-none dropdown-toggle text-dark hide-caret" id="dropdownMenuProfile" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="text-end d-none d-sm-block">
-                            <p class="fw-bold mb-0 text-dark" style="font-size: 14px; line-height: 1.2;">{{ Auth::user()->name }}</p>
+                            <p class="fw-bold mb-0 text-dark" style="font-size: 14px; line-height: 1.2;"><?php echo e(Auth::user()->name); ?></p>
                             <small class="text-muted d-block" style="font-size: 11px; margin-top: 2px;">Mahasiswa</small>
                         </div>
 
                         <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center overflow-hidden border border-secondary-subtle shadow-sm" style="width: 36px; height: 36px;">
-                            @if(Auth::user()->profile_photo)
-                                <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Foto Profil" class="w-100 h-100 object-fit-cover">
-                            @else
+                            <?php if(Auth::user()->profile_photo): ?>
+                                <img src="<?php echo e(asset('storage/' . Auth::user()->profile_photo)); ?>" alt="Foto Profil" class="w-100 h-100 object-fit-cover">
+                            <?php else: ?>
                                 <span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">account_circle</span>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2 rounded-3" aria-labelledby="dropdownMenuProfile" style="min-width: 200px;">
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-2 small fw-medium" href="{{ route('dashboard') }}">
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-2 small fw-medium" href="<?php echo e(route('dashboard')); ?>">
                                 <span class="material-symbols-outlined fs-5 text-muted">dashboard</span>
                                 Dashboard Saya
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-2 small fw-medium" href="{{ route('peserta.profil.edit') }}">
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded-2 small fw-medium" href="<?php echo e(route('peserta.profil.edit')); ?>">
                                 <span class="material-symbols-outlined fs-5 text-muted">person</span>
                                 Profil Saya
                             </a>
@@ -128,7 +128,7 @@
                                 Keluar Sesi
                             </a>
                             <form id="logout-form-dashboard" action="/logout" method="POST" class="d-none">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                             </form>
                         </li>
                     </ul>
@@ -140,16 +140,16 @@
     <main class="container my-5">
         <div class="row g-4">
             <aside class="col-lg-3">
-                @include('peserta.layouts.sidebar')
+                <?php echo $__env->make('peserta.layouts.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </aside>
 
             <section class="col-lg-9">
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </section>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
-</html>
+</html><?php /**PATH C:\laragon\www\portal-lomba-ti\resources\views/peserta/layouts/app.blade.php ENDPATH**/ ?>
