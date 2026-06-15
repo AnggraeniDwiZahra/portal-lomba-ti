@@ -80,54 +80,7 @@
                 @if($competitions->count() > 0)
                     @foreach($competitions as $lomba)
                         <div class="col-md-6 col-lg-6">
-                            <div class="card h-100 border border-secondary-subtle rounded-4 overflow-hidden bg-white shadow-sm">
-                                <div class="position-relative">
-                                    <img src="{{ $lomba->poster ? asset('storage/' . $lomba->poster) : 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80' }}" class="w-100" style="height: 180px; object-fit: cover;" alt="{{ $lomba->title }}">
-                                    
-                                    @if(\Carbon\Carbon::parse($lomba->deadline)->isPast())
-                                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 px-3 py-2 rounded-pill" style="font-size: 11px;">Closed</span>
-                                    @else
-                                        <span class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-2 rounded-pill" style="font-size: 11px;">Opened</span>
-                                    @endif
-                                </div>
-                                <div class="card-body p-4 d-flex flex-column">
-                                    <div class="mb-2">
-                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1" style="font-size: 11px;">
-                                            {{ $lomba->level->name ?? 'Nasional' }}
-                                        </span>
-                                        <small class="text-muted ms-2">• {{ $category->name }}</small>
-                                    </div>
-                                    
-                                    <h5 class="fw-bold text-dark lh-base mb-3" style="font-size: 16px;">
-                                        <a href="{{ route('lomba.detail', $lomba->id) }}" class="text-decoration-none text-dark hover-primary link-title">
-                                            {{ $lomba->title }}
-                                        </a>
-                                    </h5>
-                                    
-                                    <p class="text-muted small mb-4 lh-relaxed">
-                                        {{ Str::limit($lomba->description, 120, '...') }}
-                                    </p>
-                                    
-                                    <div class="mt-auto pt-3 border-top border-light-subtle">
-                                        <div class="d-flex justify-content-between text-muted mb-2" style="font-size: 12px;">
-                                            <span class="d-flex align-items-center gap-1">
-                                                <span class="material-symbols-outlined text-secondary" style="font-size: 16px;">school</span> Jenjang: <b class="text-dark">Mahasiswa</b>
-                                            </span>
-                                            <span class="d-flex align-items-center gap-1">
-                                                <span class="material-symbols-outlined text-success" style="font-size: 16px;">payments</span> Tautan: <b class="text-success">Tersedia</b>
-                                            </span>
-                                        </div>
-                                        <div class="d-flex justify-content-between text-muted" style="font-size: 12px;">
-                                            <span class="d-flex align-items-center gap-1">
-                                                <span class="material-symbols-outlined text-secondary" style="font-size: 16px;">public</span> Urutan: <b class="text-dark">#{{ $lomba->id }}</b>
-                                            </span>
-                                            <span class="d-flex align-items-center gap-1">
-                                                <span class="material-symbols-outlined text-danger" style="font-size: 16px;">calendar_month</span> Batas: <b class="text-danger">{{ \Carbon\Carbon::parse($lomba->deadline)->format('d M Y') }}</b>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-competition-card :lomba="$lomba" />
                         </div>
                     @endforeach
                 @else
@@ -144,7 +97,44 @@
 </div>
 
 <style>
-    .link-title:hover {
+    .lomba-card {
+        border: 1px solid rgba(198, 198, 205, 0.3);
+        border-radius: 20px;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+    .lomba-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+    }
+    .img-container {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+    }
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .card-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+    }
+    .hover-primary:hover {
         color: #0051d5 !important;
     }
 </style>
